@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class FacultyProfile {
     @Id
-    private Long userId;
+    private String username;
 
     @Column(length = 255)
     private String photo;

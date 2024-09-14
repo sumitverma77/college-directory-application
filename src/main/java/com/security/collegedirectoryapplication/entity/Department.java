@@ -1,7 +1,9 @@
 package com.security.collegedirectoryapplication.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "department")
 public class Department {

@@ -1,7 +1,6 @@
-
 body {
     font-family: Arial, sans-serif;
-    background-image: url(./images/login-pg-bg.png);
+    background-image: url('../images/login-pg-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -55,23 +54,15 @@ select {
 
 .btn-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .btn-container button {
-    width: 48%;
-    padding: 10px 20px;
+    width: 100%;
+    padding: 10px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-}
-
-.btn-container button.sign-in {
-    background-color: rgba(53, 50, 165, 0.84);
-    color: #ffffff;
-}
-
-.btn-container button.register {
     background-color: rgba(53, 50, 165, 0.84);
     color: #ffffff;
 }
@@ -80,6 +71,8 @@ select {
     opacity: 0.8;
 }
 
-#message {
+#wrong-credential,
+#correct-credential {
     margin-top: 10px;
+    text-align: center;
 }
