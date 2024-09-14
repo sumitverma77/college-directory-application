@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In or Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="./sign_in.js"></script>
+</head>
+<body>
+<div class="form-container">
+    <h1>Login / Register</h1>
+    <form action="process-login.php" method="POST">
+        <label for="username" class="username">Username:</label>
+        <input type="text" id="username" name="username" required style="padding-right: 0px; padding-left: 00px;">
+
+        <label for="password" class="password">Password:</label>
+        <input type="password" id="password" name="password" required  style="padding-right: 0px; padding-left: 00px;">
+
+        <label for="role" class="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty Member</option>
+            <option value="admin">Administrator</option>
+        </select>
+
+
+
+        <p id="wrong-credential" style="color: rgb(255,0,0);"></p>
+        <p id="correct-credential" style="color: rgb(20, 253, 3);"></p>
+
+        <div class="btn-container">
+            <button type="submit" class="register">Register</button>
+            <button type="submit" class="sign-in">Login</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
