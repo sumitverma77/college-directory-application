@@ -15,9 +15,12 @@ import com.security.collegedirectoryapplication.request.LoginRequest;
 import com.security.collegedirectoryapplication.request.PersonalInfoRequest;
 import com.security.collegedirectoryapplication.response.LoginResponse;
 import com.security.collegedirectoryapplication.response.PersonalInfoResponse;
+import com.security.collegedirectoryapplication.response.ResponseWrapper;
 import jakarta.validation.Valid;
+import jdk.jshell.Snippet;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,25 +55,35 @@ public class UserService {
        }
     }
 
-    public PersonalInfoResponse getPersonalInfo(PersonalInfoRequest personalInfoRequest)
-    {
+    public ResponseWrapper<PersonalInfoResponse> getPersonalInfo(@Valid PersonalInfoRequest personalInfoRequest) {
         User user = userRepo.findByUsername(personalInfoRequest.getUserName());
-        PersonalInfoResponse personalInfoResponse = new PersonalInfoResponse(user.getName(),null, user.getEmail(),user.getPhone());
-        if(user.getRole().equals(Role.STUDENT))
-        {
-            StudentProfile student = studentProfileRepo.findByUsername(user.getUsername());
-            personalInfoResponse.setPhoto(Objects.nonNull(student)?student.getPhoto():null);
+
+        if (Objects.isNull(user)) {
+            return new ResponseWrapper<>(null, MessageConstants.INVALID_USERNAME, HttpStatus.NOT_FOUND);
         }
-        else if(user.getRole().equals(Role.FACULTY))
-        {
-           FacultyProfile faculty =  facultyProfileRepo.findByUsername(user.getUsername());
-           personalInfoResponse.setPhoto(Objects.nonNull(faculty)?faculty.getPhoto():null);
+
+        PersonalInfoResponse personalInfoResponse = new PersonalInfoResponse(
+                user.getName(),
+                null,
+                user.getEmail(),
+                user.getPhone()
+        );
+
+        long userId = userRepo.findById(user.getUserId()).get().getUserId();
+
+        if (user.getRole().equals(Role.STUDENT)) {
+            StudentProfile student = studentProfileRepo.findByUserId(userId);
+            personalInfoResponse.setPhoto(Objects.nonNull(student) ? student.getPhoto() : null);
+        } else if (user.getRole().equals(Role.FACULTY)) {
+            FacultyProfile faculty = facultyProfileRepo.findByUserId(userId);
+            personalInfoResponse.setPhoto(Objects.nonNull(faculty) ? faculty.getPhoto() : null);
+        } else if (user.getRole().equals(Role.ADMINISTRATOR)) {
+            AdministratorProfile admin = administratorProfileRepo.findByUserId(userId);
+            personalInfoResponse.setPhoto(Objects.nonNull(admin) ? admin.getPhoto() : null);
         }
-        else if(user.getRole().equals(Role.ADMINISTRATOR)){
-            AdministratorProfile admin = administratorProfileRepo.findByUsername(user.getUsername());
-            personalInfoResponse.setPhoto(Objects.nonNull(admin)?admin.getPhoto():null);
-        }
-        return personalInfoResponse;
+
+        return new ResponseWrapper<>(personalInfoResponse, null, HttpStatus.OK);
     }
+
 
 }

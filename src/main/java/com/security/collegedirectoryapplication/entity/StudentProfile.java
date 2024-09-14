@@ -8,7 +8,10 @@ import lombok.Data;
 @Data
 public class StudentProfile {
     @Id
-    private String username;
+    private Long userId;
+    /*
+ id is acting like a foreign key which is taking the reference from the primary key of User Table
+     */
 
     @Column(length = 255)
     private String photo;
