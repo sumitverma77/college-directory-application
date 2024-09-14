@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class AdministratorProfile {
     @Id
-    private Long userId;
+    private String username;
     @Column(length = 255)
     private String photo;
     private Long departmentId;
