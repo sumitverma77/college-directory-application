@@ -21,9 +21,10 @@ public class Controller {
     }
 
     @GetMapping("/user/personal/info")
-    public PersonalInfoResponse userPersonalInfo(@RequestBody PersonalInfoRequest personalInfoRequest)
+    public Object userPersonalInfo(@RequestBody PersonalInfoRequest personalInfoRequest)
     {
         return userService.getPersonalInfo(personalInfoRequest);
     }
+
 
 }
